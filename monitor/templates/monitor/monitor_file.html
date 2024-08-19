@@ -1,0 +1,25 @@
+<!-- monitor/templates/monitor/monitor_file.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>File Monitor</title>
+</head>
+<body>
+    <h1>Monitoring File: {{ file_name }}</h1>
+    <div id="file-content">
+        <!-- File content will be dynamically loaded here -->
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function fetchLatestLines() {
+            $.getJSON("{% url 'get_latest_lines' %}", function(data) {
+                $('#file-content').html(data.lines.join('<br>'));
+            });
+        }
+
+        setInterval(fetchLatestLines, 10000); // Poll every 2 seconds
+    </script>
+</body>
+</html>
